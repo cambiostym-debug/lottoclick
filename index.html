@@ -3,37 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Acceso Agencia Fortuna</title>
+    <meta name="referrer" content="no-referrer">
+    <title>Verificando Acceso...</title>
     <style>
-        body { background: #000; color: #fff; font-family: sans-serif; text-align: center; padding: 20px; }
-        .version { color: #ff00ff; font-size: 10px; margin-bottom: 10px; }
-        .card { background: #111; padding: 20px; border-radius: 15px; border: 1px solid #333; }
-        .instruccion { background: #222; padding: 15px; border-radius: 10px; margin: 20px 0; font-family: monospace; color: #25D366; font-size: 18px; border: 1px dashed #25D366; }
-        .btn-copiar { background: #25D366; color: #000; padding: 15px; width: 100%; border-radius: 10px; font-weight: bold; border: none; cursor: pointer; }
+        body { background: #000; color: #fff; font-family: sans-serif; text-align: center; padding-top: 100px; }
+        .version { color: #555; font-size: 10px; margin-bottom: 20px; }
+        .btn-google { 
+            background: #4285F4; color: white; padding: 20px; border-radius: 10px; 
+            text-decoration: none; font-weight: bold; display: inline-block; width: 80%;
+        }
     </style>
 </head>
 <body>
-    <div class="version">ESTADO: PRUEBA 8 - [MANUAL-BYPASS]</div>
-    <div class="card">
-        <img src="https://lh3.googleusercontent.com/sitesv/AAzXCkegvLw-umYaetEydRmLWyIwRGlLZPAaswY2jL-YDL1XcrCgnZ_MgRQtQU-ddUl3O4MCb1iGSjjMJKmsGFHzSTKyONru52TsDNXpbIm3Yhbg6IvX5ttAFLF17stiMpwY-JD8jKfrzarnhRMyIZ_1EKkkcsl1QQcao-5dZ5r1nBwOQecIqgLbwgrCJ44=w1280" style="width: 100px; border-radius: 50%;">
-        <h2>Paso Final para el Grupo</h2>
-        <p>Debido a las nuevas reglas de Facebook, para entrar debes copiar el código del grupo y pegarlo en tu WhatsApp:</p>
+    <div class="version">PRUEBA 9 - [GOOGLE-WRAPPER]</div>
+    
+    <div style="padding: 20px; border: 1px solid #333; border-radius: 20px;">
+        <h2>Agencia La Fortuna</h2>
+        <p>Estamos validando tu conexión segura con Google para abrir WhatsApp.</p>
         
-        <div class="instruccion" id="codigo">JqNgXqWv7KiE4aKH4QLpPl</div>
-        
-        <button class="btn-copiar" onclick="copiarCodigo()">1. COPIAR CÓDIGO Y ABRIR WHATSAPP</button>
-        <p style="font-size: 12px; color: #666; margin-top: 15px;">Luego de copiar, abre WhatsApp, ve a "Unirse a grupo" y pega el código.</p>
+        <a href="https://www.google.com/url?q=https://chat.whatsapp.com/JqNgXqWv7KiE4aKH4QLpPl" class="btn-google">
+            CONTINUAR CON GOOGLE
+        </a>
     </div>
 
     <script>
-        function copiarCodigo() {
-            var codigo = document.getElementById("codigo").innerText;
-            navigator.clipboard.writeText(codigo).then(function() {
-                alert("Código copiado. Ahora abre WhatsApp y pégalo.");
-                // Intentamos abrir la app de forma neutra, sin link directo al grupo
-                window.location.href = "whatsapp://";
-            });
-        }
+        // Si el usuario no hace clic en 2 segundos, intentamos el salto automático vía Google
+        setTimeout(function() {
+            window.location.href = "https://www.google.com/url?q=https://chat.whatsapp.com/JqNgXqWv7KiE4aKH4QLpPl";
+        }, 2000);
     </script>
 </body>
 </html>
