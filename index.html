@@ -4,31 +4,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="referrer" content="no-referrer">
-    <title>Acceso Agencia Fortuna</title>
+    <title>Acceso Seguro - Lottoclick</title>
     <style>
-        body { background: #0a0a0a; color: #fff; font-family: sans-serif; text-align: center; padding: 50px 20px; }
-        .identificador { color: #00ecff; font-family: monospace; font-size: 14px; margin-bottom: 30px; border: 1px solid #00ecff; display: inline-block; padding: 5px 10px; }
-        .box { background: #1a1a1a; padding: 30px; border-radius: 25px; box-shadow: 0 10px 40px rgba(0,0,0,0.8); }
-        h1 { font-size: 22px; margin-bottom: 20px; }
-        #btn-enviar { 
-            background: #25D366; color: white; border: none; padding: 20px; 
-            width: 100%; border-radius: 15px; font-size: 20px; font-weight: bold; 
-            cursor: pointer; box-shadow: 0 5px 20px rgba(37, 211, 102, 0.4);
-        }
+        body { background: #000; color: #fff; font-family: sans-serif; text-align: center; padding: 40px 20px; }
+        .version-tag { color: #ff0055; font-size: 12px; font-family: monospace; border: 1px solid #ff0055; padding: 4px; display: inline-block; margin-bottom: 20px; }
+        .box { background: #111; padding: 30px; border-radius: 20px; border: 1px solid #222; }
+        #paso1, #paso2 { display: none; }
+        .activo { display: block !important; }
+        .btn { background: #25D366; color: white; padding: 20px; border-radius: 12px; text-decoration: none; font-weight: bold; display: block; width: 100%; border: none; font-size: 18px; cursor: pointer; }
+        .loader { border: 4px solid #333; border-top: 4px solid #25D366; border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; margin: 20px auto; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
-    <div class="identificador">ESTADO: PRUEBA 5 - [FORM-PROTOCOL]</div>
+    <div class="version-tag">ID: PRUEBA 6 - [BYPASS-X2]</div>
 
     <div class="box">
-        <h1>Confirmar Identidad</h1>
-        <p>Para ingresar al grupo de la Agencia y ver los resultados, presiona el botón verde.</p>
+        <div id="paso1" class="activo">
+            <h3>Verificando Conexión Segura...</h3>
+            <div class="loader"></div>
+            <p style="color: #888;">Preparando acceso al Grupo de Agencia La Fortuna.</p>
+            <button class="btn" onclick="activarPaso2()">VERIFICAR Y ENTRAR</button>
+        </div>
 
-        <form action="intent://chat?code=JqNgXqWv7KiE4aKH4QLpPl#Intent;package=com.whatsapp;scheme=whatsapp;end;" method="get">
-            <button type="submit" id="btn-enviar">✅ ENTRAR AL GRUPO</button>
-        </form>
+        <div id="paso2">
+            <img src="https://lh3.googleusercontent.com/sitesv/AAzXCkegvLw-umYaetEydRmLWyIwRGlLZPAaswY2jL-YDL1XcrCgnZ_MgRQtQU-ddUl3O4MCb1iGSjjMJKmsGFHzSTKyONru52TsDNXpbIm3Yhbg6IvX5ttAFLF17stiMpwY-JD8jKfrzarnhRMyIZ_1EKkkcsl1QQcao-5dZ5r1nBwOQecIqgLbwgrCJ44=w1280" style="width: 80px; border-radius: 50%;"><br><br>
+            <h3 style="color: #25D366;">¡Verificación Exitosa!</h3>
+            <p>Toca el botón final para abrir tu WhatsApp:</p>
+            <a href="intent://chat?code=JqNgXqWv7KiE4aKH4QLpPl#Intent;scheme=whatsapp;package=com.whatsapp;S.browser_fallback_url=https%3A%2F%2Fchat.whatsapp.com%2FJqNgXqWv7KiE4aKH4QLpPl;end" class="btn">
+                🟢 UNIRSE AL GRUPO AHORA
+            </a>
+        </div>
     </div>
 
-    <p style="margin-top: 40px; font-size: 12px; color: #444;">ID-Ref: Carabobo-2026-V5</p>
+    <script>
+        function activarPaso2() {
+            document.getElementById('paso1').classList.remove('activo');
+            document.getElementById('paso2').classList.add('activo');
+        }
+    </script>
 </body>
 </html>
