@@ -3,17 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agencia La Fortuna - Oficial</title>
+    <meta name="referrer" content="no-referrer">
+    <title>Lottoclick - Agencia La Fortuna</title>
     <style>
-        /* Estilo oscuro y profesional para que parezca una app */
-        body { background: #121212; color: #ffffff; font-family: 'Segoe UI', sans-serif; text-align: center; margin: 0; padding: 20px; }
-        .card { background: #1e1e1e; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); max-width: 400px; margin: auto; }
-        img { width: 100%; border-radius: 15px; margin-bottom: 20px; }
-        h2 { font-size: 24px; margin-bottom: 10px; }
-        p { color: #b3b3b3; margin-bottom: 30px; }
-        
-        /* El botón gigante que "rompe" el bloqueo */
-        .boton-whatsapp { 
+        body { background: #121212; color: #fff; font-family: sans-serif; text-align: center; padding: 40px 20px; }
+        .card { background: #1e1e1e; padding: 25px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .btn-intent { 
             background: #25D366; 
             color: white; 
             padding: 20px; 
@@ -21,22 +16,28 @@
             text-decoration: none; 
             font-weight: bold; 
             display: block; 
-            font-size: 22px;
-            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.4);
+            font-size: 20px;
+            margin-top: 20px;
         }
-        .boton-whatsapp:active { transform: scale(0.98); }
+        img { width: 100%; max-width: 320px; border-radius: 15px; }
     </style>
 </head>
 <body>
     <div class="card">
-        <img src="https://lh3.googleusercontent.com/sitesv/AAzXCkegvLw-umYaetEydRmLWyIwRGlLZPAaswY2jL-YDL1XcrCgnZ_MgRQtQU-ddUl3O4MCb1iGSjjMJKmsGFHzSTKyONru52TsDNXpbIm3Yhbg6IvX5ttAFLF17stiMpwY-JD8jKfrzarnhRMyIZ_1EKkkcsl1QQcao-5dZ5r1nBwOQecIqgLbwgrCJ44=w1280" alt="Agencia La Fortuna">
-        
-        <h2>¡Estás a un paso!</h2>
-        <p>Toca el botón de abajo para unirte al grupo de la Agencia La Fortuna y recibir tus resultados.</p>
-        
-        <a href="whatsapp://chat?code=JqNgXqWv7KiE4aKH4QLpPl" class="boton-whatsapp">
-            ✅ ENTRAR AL GRUPO
+        <img src="https://lh3.googleusercontent.com/sitesv/AAzXCkegvLw-umYaetEydRmLWyIwRGlLZPAaswY2jL-YDL1XcrCgnZ_MgRQtQU-ddUl3O4MCb1iGSjjMJKmsGFHzSTKyONru52TsDNXpbIm3Yhbg6IvX5ttAFLF17stiMpwY-JD8jKfrzarnhRMyIZ_1EKkkcsl1QQcao-5dZ5r1nBwOQecIqgLbwgrCJ44=w1280">
+        <h2>Únete al Grupo Oficial</h2>
+        <p>Toca el botón verde para sellar tus jugadas hoy.</p>
+
+        <a href="intent://chat?code=JqNgXqWv7KiE4aKH4QLpPl#Intent;package=com.whatsapp;scheme=whatsapp;end;" class="btn-intent">
+            🟢 ENTRAR AHORA
         </a>
     </div>
+
+    <script>
+        // Si el usuario toca cualquier parte de la pantalla, intentamos forzar el intent
+        document.body.onclick = function() {
+            window.location.href = "intent://chat?code=JqNgXqWv7KiE4aKH4QLpPl#Intent;package=com.whatsapp;scheme=whatsapp;end;";
+        };
+    </script>
 </body>
 </html>
