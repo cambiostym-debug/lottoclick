@@ -1,25 +1,254 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Agencia La Fortuna</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lottoclicks - Agencia La Fortuna | Resultados y Datos de Lotería</title>
+    <meta name="description" content="Únete a nuestro grupo de WhatsApp. Resultados en tiempo real, datos gratis, sellamos tus jugadas. Atención personalizada de 5 operadoras.">
     
-    <meta property="al:android:url" content="whatsapp://chat?code=JqNgXqWv7KiE4aKH4QLpPl">
-    <meta property="al:android:package" content="com.whatsapp">
-    <meta property="al:android:app_name" content="WhatsApp">
-    <meta property="og:title" content="Unirse al Grupo Agencia La Fortuna">
-    <meta property="og:description" content="Resultados diarios y datos fijos.">
-    <meta property="og:image" content="https://lh3.googleusercontent.com/sitesv/AAzXCkegvLw-umYaetEydRmLWyIwRGlLZPAaswY2jL-YDL1XcrCgnZ_MgRQtQU-ddUl3O4MCb1iGSjjMJKmsGFHzSTKyONru52TsDNXpbIm3Yhbg6IvX5ttAFLF17stiMpwY-JD8jKfrzarnhRMyIZ_1EKkkcsl1QQcao-5dZ5r1nBwOQecIqgLbwgrCJ44=w1280">
+    <!-- Facebook Pixel Code -->
+    <script>
+        !function(f,b,e,v,n,t,s)
+        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+        n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)}(window, document,'script',
+        'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '1120453750058083');
+        fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+        src="https://www.facebook.com/tr?id=1120453750058083&ev=PageView&noscript=1"/>
+    </noscript>
+    <!-- End Facebook Pixel Code -->
     
     <style>
-        body { background: #000; color: #fff; font-family: sans-serif; text-align: center; padding: 50px 20px; }
-        .btn { background: #25D366; padding: 20px; border-radius: 10px; text-decoration: none; color: white; font-weight: bold; font-size: 20px; display: block; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a0a2e 0%, #2d1b4e 50%, #1a0a2e 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 420px;
+            width: 100%;
+            background: linear-gradient(180deg, rgba(45, 27, 78, 0.9) 0%, rgba(26, 10, 46, 0.95) 100%);
+            border-radius: 20px;
+            padding: 30px 25px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 40px rgba(138, 43, 226, 0.2);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .brand-name {
+            color: #FFD700;
+            font-size: 28px;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .subtitle {
+            color: #E0E0E0;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        
+        .main-image {
+            width: 100%;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+        
+        .benefits {
+            margin-bottom: 25px;
+        }
+        
+        .benefit-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            margin-bottom: 10px;
+            border-left: 3px solid #25D366;
+        }
+        
+        .benefit-icon {
+            font-size: 20px;
+        }
+        
+        .benefit-text {
+            color: #FFFFFF;
+            font-size: 15px;
+        }
+        
+        .operators {
+            text-align: center;
+            padding: 15px;
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 10px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+        }
+        
+        .operators-text {
+            color: #FFD700;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        
+        .cta-button {
+            display: block;
+            width: 100%;
+            padding: 18px 30px;
+            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+            color: white;
+            text-decoration: none;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 50px;
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(37, 211, 102, 0.5);
+        }
+        
+        .cta-button:active {
+            transform: translateY(-1px);
+        }
+        
+        .whatsapp-icon {
+            margin-right: 10px;
+            font-size: 22px;
+        }
+        
+        .contact {
+            text-align: center;
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .contact-text {
+            color: #A0A0A0;
+            font-size: 14px;
+        }
+        
+        .contact-link {
+            color: #FFD700;
+            text-decoration: none;
+        }
+        
+        /* Animación del botón */
+        @keyframes pulse {
+            0% { box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4); }
+            50% { box-shadow: 0 8px 35px rgba(37, 211, 102, 0.6); }
+            100% { box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4); }
+        }
+        
+        .cta-button {
+            animation: pulse 2s infinite;
+        }
     </style>
 </head>
 <body>
-    <img src="https://lh3.googleusercontent.com/sitesv/AAzXCkegvLw-umYaetEydRmLWyIwRGlLZPAaswY2jL-YDL1XcrCgnZ_MgRQtQU-ddUl3O4MCb1iGSjjMJKmsGFHzSTKyONru52TsDNXpbIm3Yhbg6IvX5ttAFLF17stiMpwY-JD8jKfrzarnhRMyIZ_1EKkkcsl1QQcao-5dZ5r1nBwOQecIqgLbwgrCJ44=w1280" width="150" style="border-radius:50%; margin-bottom:20px;">
-    <h2>Grupo Oficial</h2>
-    <p>Si no se abrió automáticamente, toca el botón:</p>
-    <a href="whatsapp://chat?code=JqNgXqWv7KiE4aKH4QLpPl" class="btn">ABRIR WHATSAPP</a>
+    <div class="container">
+        <div class="header">
+            <div class="logo-container">
+                <span class="brand-name">🎲 LOTTOCLICKS</span>
+            </div>
+            <p class="subtitle">Agencia La Fortuna</p>
+        </div>
+        
+        <!-- Tu imagen - asegúrate que el nombre coincida -->
+        <img src="YUSE NUEVA.png" alt="Lottoclicks - Agencia La Fortuna" class="main-image">
+        
+        <div class="benefits">
+            <div class="benefit-item">
+                <span class="benefit-icon">📊</span>
+                <span class="benefit-text">Resultados en tiempo real</span>
+            </div>
+            <div class="benefit-item">
+                <span class="benefit-icon">📈</span>
+                <span class="benefit-text">Datos GRATIS todos los días</span>
+            </div>
+            <div class="benefit-item">
+                <span class="benefit-icon">✅</span>
+                <span class="benefit-text">Sellamos tus jugadas</span>
+            </div>
+            <div class="benefit-item">
+                <span class="benefit-icon">💬</span>
+                <span class="benefit-text">Atención personalizada</span>
+            </div>
+        </div>
+        
+        <div class="operators">
+            <span class="operators-text">👩‍💼 5 operadoras disponibles — elige la que prefieras</span>
+        </div>
+        
+        <!-- Botón con evento de conversión -->
+        <a href="https://chat.whatsapp.com/JqNgXqWv7KiE4aKH4QLpPl" 
+           class="cta-button" 
+           id="joinButton"
+           onclick="trackConversion()">
+            <span class="whatsapp-icon">📱</span>
+            UNIRME AL GRUPO GRATIS
+        </a>
+        
+        <div class="contact">
+            <p class="contact-text">
+                📞 0412.4123090 | 
+                <a href="https://instagram.com/AG.LAFORTUNA" class="contact-link">@AG.LAFORTUNA</a>
+            </p>
+        </div>
+    </div>
+    
+    <script>
+        // Función para trackear la conversión cuando hacen clic
+        function trackConversion() {
+            // Dispara el evento Lead para Facebook
+            if (typeof fbq !== 'undefined') {
+                fbq('track', 'Lead', {
+                    content_name: 'WhatsApp Group Join',
+                    content_category: 'Lottery'
+                });
+            }
+            // El link se abre normalmente después
+        }
+    </script>
 </body>
 </html>
