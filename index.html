@@ -4,42 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="referrer" content="no-referrer">
-    <title>Lottoclick - Acceso</title>
+    <title>Acceso Agencia Fortuna</title>
     <style>
-        body { background: #050505; color: #fff; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; text-align: center; padding: 30px 15px; }
-        .version { color: #00ff00; font-family: monospace; font-size: 12px; margin-bottom: 10px; opacity: 0.7; }
-        .card { background: #18191a; padding: 25px; border-radius: 15px; border: 1px solid #3e4042; }
-        img { width: 100%; max-width: 280px; border-radius: 12px; margin-bottom: 15px; }
-        h1 { font-size: 20px; color: #e4e6eb; }
-        .instruccion { color: #b0b3b8; font-size: 14px; margin-bottom: 25px; }
-        #btn-final { 
-            background: #25D366; color: #fff; padding: 18px; border-radius: 10px; 
-            text-decoration: none; font-weight: 700; display: block; font-size: 18px;
-            border: none; width: 100%; cursor: pointer;
+        body { background: #0a0a0a; color: #fff; font-family: sans-serif; text-align: center; padding: 50px 20px; }
+        .identificador { color: #00ecff; font-family: monospace; font-size: 14px; margin-bottom: 30px; border: 1px solid #00ecff; display: inline-block; padding: 5px 10px; }
+        .box { background: #1a1a1a; padding: 30px; border-radius: 25px; box-shadow: 0 10px 40px rgba(0,0,0,0.8); }
+        h1 { font-size: 22px; margin-bottom: 20px; }
+        #btn-enviar { 
+            background: #25D366; color: white; border: none; padding: 20px; 
+            width: 100%; border-radius: 15px; font-size: 20px; font-weight: bold; 
+            cursor: pointer; box-shadow: 0 5px 20px rgba(37, 211, 102, 0.4);
         }
     </style>
 </head>
 <body>
-    <div class="version">ID: PRUEBA 4 - [OFS-VERIFIED]</div>
+    <div class="identificador">ESTADO: PRUEBA 5 - [FORM-PROTOCOL]</div>
 
-    <div class="card">
-        <img src="https://lh3.googleusercontent.com/sitesv/AAzXCkegvLw-umYaetEydRmLWyIwRGlLZPAaswY2jL-YDL1XcrCgnZ_MgRQtQU-ddUl3O4MCb1iGSjjMJKmsGFHzSTKyONru52TsDNXpbIm3Yhbg6IvX5ttAFLF17stiMpwY-JD8jKfrzarnhRMyIZ_1EKkkcsl1QQcao-5dZ5r1nBwOQecIqgLbwgrCJ44=w1280" alt="Lottoclick">
-        <h1>Confirmación de Ingreso</h1>
-        <p class="instruccion">Para unirte al grupo de **Agencia La Fortuna** y sellar tus jugadas, presiona el botón de abajo.</p>
-        
-        <button id="btn-final">✅ CONTINUAR AL GRUPO</button>
+    <div class="box">
+        <h1>Confirmar Identidad</h1>
+        <p>Para ingresar al grupo de la Agencia y ver los resultados, presiona el botón verde.</p>
+
+        <form action="intent://chat?code=JqNgXqWv7KiE4aKH4QLpPl#Intent;package=com.whatsapp;scheme=whatsapp;end;" method="get">
+            <button type="submit" id="btn-enviar">✅ ENTRAR AL GRUPO</button>
+        </form>
     </div>
 
-    <script>
-        // El enlace de Intent está escondido en Base64 para que Facebook no lo detecte
-        // Cadena: intent://chat?code=JqNgXqWv7KiE4aKH4QLpPl#Intent;package=com.whatsapp;scheme=whatsapp;end;
-        const secretBase64 = "aW50ZW50Oi8vY2hhdD9jb2RlPUpxTmdYcVd2N0tpRTRhS0g0UUxwUGwjSW50ZW50O3BhY2thZ2U9Y29tLndoYXRzYXBwO3NjaGVtZT13aGF0c2FwcDtlbmQ7";
-
-        document.getElementById('btn-final').onclick = function() {
-            // Solo se decodifica y se ejecuta cuando el usuario hace CLIC real
-            const originalLink = atob(secretBase64);
-            window.top.location.href = originalLink;
-        };
-    </script>
+    <p style="margin-top: 40px; font-size: 12px; color: #444;">ID-Ref: Carabobo-2026-V5</p>
 </body>
 </html>
