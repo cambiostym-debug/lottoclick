@@ -206,10 +206,10 @@
         </p>
         
         <!-- Botón justo debajo del mensaje -->
-        <a href="https://chat.whatsapp.com/JqNgXqWv7KiE4aKH4QLpPl" 
+        <a href="#" 
            class="cta-button" 
            id="joinButton"
-           onclick="trackConversion()">
+           onclick="openWhatsAppGroup(); return false;">
             <span class="whatsapp-icon">📱</span>
             UNIRME AL GRUPO DE WHATSAPP GRATIS
         </a>
@@ -250,16 +250,52 @@
     </div>
     
     <script>
-        // Función para trackear la conversión cuando hacen clic
-        function trackConversion() {
-            // Dispara el evento Lead para Facebook
+        // Código del grupo de WhatsApp
+        const GRUPO_CODE = 'JqNgXqWv7KiE4aKH4QLpPl';
+        const GRUPO_URL = 'https://chat.whatsapp.com/' + GRUPO_CODE;
+        
+        // Detectar sistema operativo
+        function detectOS() {
+            const ua = navigator.userAgent;
+            if (/android/i.test(ua)) return 'android';
+            if (/iPad|iPhone|iPod/.test(ua)) return 'ios';
+            return 'desktop';
+        }
+        
+        // Abrir WhatsApp según el dispositivo
+        function openWhatsAppGroup() {
+            // Primero trackear la conversión
             if (typeof fbq !== 'undefined') {
                 fbq('track', 'Lead', {
                     content_name: 'WhatsApp Group Join',
                     content_category: 'Lottery'
                 });
             }
-            // El link se abre normalmente después
+            
+            const os = detectOS();
+            
+            if (os === 'android') {
+                // Intent de Android - intenta abrir WhatsApp directamente
+                const intentUrl = 'intent://invite/' + GRUPO_CODE + '#Intent;' +
+                    'scheme=whatsapp;' +
+                    'package=com.whatsapp;' +
+                    'action=android.intent.action.VIEW;' +
+                    'S.browser_fallback_url=' + encodeURIComponent(GRUPO_URL) + ';' +
+                    'end';
+                
+                window.location.href = intentUrl;
+            } else if (os === 'ios') {
+                // Deep link para iOS
+                window.location.href = 'whatsapp://invite/' + GRUPO_CODE;
+                
+                // Fallback si no funciona después de 2 segundos
+                setTimeout(function() {
+                    window.location.href = GRUPO_URL;
+                }, 2000);
+            } else {
+                // Desktop - link normal
+                window.location.href = GRUPO_URL;
+            }
         }
     </script>
 </body>
