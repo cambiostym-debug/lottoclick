@@ -262,6 +262,13 @@
             return 'desktop';
         }
         
+        // Detectar si estamos en WebView de Facebook/Instagram
+        function isInAppBrowser() {
+            const ua = navigator.userAgent || navigator.vendor || window.opera;
+            return ua.includes('FBAN') || ua.includes('FBAV') || 
+                   ua.includes('Instagram') || ua.includes('FB_IAB');
+        }
+        
         // Abrir WhatsApp según el dispositivo
         function openWhatsAppGroup() {
             // Primero trackear la conversión
@@ -273,9 +280,30 @@
             }
             
             const os = detectOS();
+            const inAppBrowser = isInAppBrowser();
             
+            // Si estamos en WebView de Facebook, intentar forzar apertura en Chrome
+            if (inAppBrowser && os === 'android') {
+                // Intent para abrir Chrome directamente con la URL de WhatsApp
+                const chromeIntent = 'intent://' + GRUPO_URL.replace('https://', '') + '#Intent;' +
+                    'scheme=https;' +
+                    'package=com.android.chrome;' +
+                    'S.browser_fallback_url=' + encodeURIComponent(GRUPO_URL) + ';' +
+                    'end';
+                
+                window.location.href = chromeIntent;
+                return;
+            }
+            
+            // Si estamos en WebView de Facebook en iOS, no hay mucho que hacer
+            if (inAppBrowser) {
+                window.location.href = GRUPO_URL;
+                return;
+            }
+            
+            // Si estamos en navegador externo (Chrome, Safari)
             if (os === 'android') {
-                // Intent de Android - intenta abrir WhatsApp directamente
+                // Intent de Android - abre WhatsApp directamente
                 const intentUrl = 'intent://invite/' + GRUPO_CODE + '#Intent;' +
                     'scheme=whatsapp;' +
                     'package=com.whatsapp;' +
