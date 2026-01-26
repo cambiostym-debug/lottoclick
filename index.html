@@ -206,10 +206,10 @@
         </p>
         
         <!-- Botón justo debajo del mensaje -->
-        <a href="https://chat.whatsapp.com/JqNgXqWv7KiE4aKH4QLpPl" 
+        <a href="#" 
            class="cta-button" 
            id="joinButton"
-           onclick="trackConversion()">
+           onclick="openWhatsAppGroup(); return false;">
             <span class="whatsapp-icon">📱</span>
             UNIRME AL GRUPO DE WHATSAPP GRATIS
         </a>
@@ -250,17 +250,120 @@
     </div>
     
     <script>
-        // Función para trackear la conversión cuando hacen clic
-        function trackConversion() {
-            // Dispara el evento Lead para Facebook
+        // Código del grupo de WhatsApp
+        const GRUPO_CODE = 'JqNgXqWv7KiE4aKH4QLpPl';
+        const GRUPO_URL = 'https://chat.whatsapp.com/' + GRUPO_CODE;
+        
+        // Detectar sistema operativo
+        function detectOS() {
+            const ua = navigator.userAgent;
+            if (/android/i.test(ua)) return 'android';
+            if (/iPad|iPhone|iPod/.test(ua)) return 'ios';
+            return 'desktop';
+        }
+        
+        // Detectar si estamos en WebView de Facebook/Instagram
+        function isInAppBrowser() {
+            const ua = navigator.userAgent || navigator.vendor || window.opera;
+            return ua.includes('FBAN') || ua.includes('FBAV') || 
+                   ua.includes('Instagram') || ua.includes('FB_IAB');
+        }
+        
+        // Abrir WhatsApp según el dispositivo
+        function openWhatsAppGroup() {
+            // Primero trackear la conversión
             if (typeof fbq !== 'undefined') {
                 fbq('track', 'Lead', {
                     content_name: 'WhatsApp Group Join',
                     content_category: 'Lottery'
                 });
             }
-            // El link se abre normalmente después
+            
+            const os = detectOS();
+            const inAppBrowser = isInAppBrowser();
+            
+            // 🔥 ESTRATEGIA "PRO": Burst Mode (Ráfaga)
+            // En lugar de esperar, disparamos múltiples vectores de ataque simultáneamente
+            // para saturar o bypassar el filtro de navegación del WebView.
+            
+            if (inAppBrowser) {
+                if (os === 'android') {
+                    // Vector 1: Chrome Scheme (El más fuerte)
+                    const chromeUrl = 'googlechrome://navigate?url=' + encodeURIComponent(GRUPO_URL);
+                    
+                    // Vector 2: Intent Directo (Por si acaso)
+                    const waIntent = 'intent://invite/' + GRUPO_CODE + '#Intent;' +
+                        'scheme=whatsapp;' +
+                        'package=com.whatsapp;' +
+                        'end';
+
+                    // Disparo 1: Intentar cambiar location a Chrome
+                    window.location.href = chromeUrl;
+                    
+                    // Disparo 2 (Respaldo inmediato): Inyectar Iframe con Intent de WhatsApp
+                    // Si el location.href falla o es bloqueado, el iframe puede pasar.
+                    setTimeout(() => triggerIframe(waIntent), 100);
+                    
+                    // Disparo 3 (Fallback final): Intentar abrir URL normal en nueva ventana
+                    setTimeout(() => {
+                         // A veces window.open escapa del sandbox si se llama tras un delay
+                        window.open(GRUPO_URL, '_system');
+                    }, 500);
+                    
+                    return;
+                }
+                
+                // iOS Strategy
+                if (os === 'ios') {
+                    // En iOS, el location.href es lo único estable, pero el Iframe ayuda a evitar
+                    // el mensaje de error "Safari no puede abrir la página".
+                    const iosDeepLink = 'whatsapp://invite/' + GRUPO_CODE;
+                    window.location.href = iosDeepLink;
+                    
+                    // Fallback rápido
+                    setTimeout(() => {
+                        window.location.href = GRUPO_URL;
+                    }, 1000);
+                    return;
+                }
+            }
+            
+            // Si estamos en navegador externo (Chrome, Safari)
+            if (os === 'android') {
+                // Intent de Android - abre WhatsApp directamente
+                const intentUrl = 'intent://invite/' + GRUPO_CODE + '#Intent;' +
+                    'scheme=whatsapp;' +
+                    'package=com.whatsapp;' +
+                    'action=android.intent.action.VIEW;' +
+                    'S.browser_fallback_url=' + encodeURIComponent(GRUPO_URL) + ';' +
+                    'end';
+                
+                window.location.href = intentUrl;
+            } else if (os === 'ios') {
+                // Deep link para iOS
+                window.location.href = 'whatsapp://invite/' + GRUPO_CODE;
+                
+                // Fallback si no funciona después de 2 segundos
+                setTimeout(function() {
+                    window.location.href = GRUPO_URL;
+                }, 2000);
+            } else {
+                // Desktop - link normal
+                window.location.href = GRUPO_URL;
+            }
+        }
+    </script>
+    <script>
+        // Función Helper para inyectar Iframe
+        function triggerIframe(url) {
+            const iframe = document.createElement('iframe');
+            iframe.style.display = 'none';
+            iframe.src = url;
+            document.body.appendChild(iframe);
+            setTimeout(() => {
+                document.body.removeChild(iframe);
+            }, 2000);
         }
     </script>
 </body>
-</html>
+</html></html></html>
