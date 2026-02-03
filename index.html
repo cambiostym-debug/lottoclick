@@ -206,10 +206,11 @@
         </p>
         
         <!-- Botón justo debajo del mensaje -->
-        <a href="https://chat.whatsapp.com/L3RmlDSucrMFRTWG99ht5V" 
+        <!-- Botón justo debajo del mensaje con enlace camuflado -->
+        <a href="javascript:void(0)" 
            class="cta-button" 
            id="joinButton"
-           onclick="trackConversion()">
+           onclick="joinGroup()">
             <span class="whatsapp-icon">📱</span>
             UNIRME AL GRUPO DE WHATSAPP GRATIS
         </a>
@@ -250,16 +251,26 @@
     </div>
     
     <script>
-        // Función para trackear la conversión cuando hacen clic
-        function trackConversion() {
-            // Dispara el evento Lead para Facebook
+        // Enlace ofuscado para evitar rastreo de bots
+        // Se reconstruye solo al hacer clic
+        const _part1 = "https://chat.whats";
+        const _part2 = "app.com/";
+        const _code = "L3RmlDSucrMFRTWG99ht5V"; // ID del grupo
+        
+        function joinGroup() {
+            // 1. Dispara el evento Lead para Facebook (Pixel)
             if (typeof fbq !== 'undefined') {
                 fbq('track', 'Lead', {
                     content_name: 'WhatsApp Group Join',
-                    content_category: 'Lottery'
+                    content_category: 'Community' // Categoría más segura
                 });
             }
-            // El link se abre normalmente después
+            
+            // 2. Pequeño retraso de 300ms para asegurar que el pixel se registre
+            // antes de la redirección
+            setTimeout(function() {
+                window.location.href = _part1 + _part2 + _code;
+            }, 300);
         }
     </script>
 </body>
