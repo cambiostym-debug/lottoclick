@@ -1,5 +1,14 @@
 <!DOCTYPE html>
 <html lang="es">
+<!-- ============================================= -->
+<!-- 🔗 CAMBIAR ENLACE DEL GRUPO AQUÍ ABAJO 🔗     -->
+<!-- ============================================= -->
+<script>
+    // ⬇️⬇️⬇️ PEGA EL CÓDIGO DEL GRUPO AQUÍ (solo la parte final del enlace) ⬇️⬇️⬇️
+    var GRUPO_WHATSAPP = "CsaKn6EmHUY4iIfBkoTydZ";
+    // Ejemplo: si tu enlace es https://chat.whatsapp.com/ABC123 pones: "ABC123"
+</script>
+<!-- ============================================= -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -252,24 +261,19 @@
     
     <script>
         // Enlace ofuscado para evitar rastreo de bots
-        // Se reconstruye solo al hacer clic
-        const _part1 = "https://chat.whats";
-        const _part2 = "app.com/";
-        const _code = "L3RmlDSucrMFRTWG99ht5V"; // ID del grupo
+        // Se reconstruye solo al hacer clic (usa GRUPO_WHATSAPP de arriba)
+        const _p1 = "https://chat.whats";
+        const _p2 = "app.com/";
         
         function joinGroup() {
-            // 1. Dispara el evento Lead para Facebook (Pixel)
             if (typeof fbq !== 'undefined') {
                 fbq('track', 'Lead', {
                     content_name: 'WhatsApp Group Join',
-                    content_category: 'Community' // Categoría más segura
+                    content_category: 'Community'
                 });
             }
-            
-            // 2. Pequeño retraso de 300ms para asegurar que el pixel se registre
-            // antes de la redirección
             setTimeout(function() {
-                window.location.href = _part1 + _part2 + _code;
+                window.location.href = _p1 + _p2 + GRUPO_WHATSAPP;
             }, 300);
         }
     </script>
