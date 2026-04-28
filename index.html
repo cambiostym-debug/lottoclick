@@ -7,6 +7,10 @@
     // ⬇️⬇️⬇️ PEGA EL CÓDIGO DEL GRUPO AQUÍ (solo la parte final del enlace) ⬇️⬇️⬇️
     var GRUPO_WHATSAPP = "ELBwABcCJ0yAhPJmeoIH5c";
     // Ejemplo: si tu enlace es https://chat.whatsapp.com/ABC123 pones: "ABC123"
+
+    // ⬇️⬇️⬇️ CAMBIA EL NOMBRE DE LA IMAGEN DE LA OPERADORA AQUÍ ⬇️⬇️⬇️
+    var IMAGEN_OPERADORA = "YUSE NUEVA.png";
+    // Debe ser el nombre exacto del archivo subido al repo
 </script>
 <!-- ============================================= -->
 <head>
@@ -206,7 +210,7 @@
         </div>
         
         <!-- Tu imagen -->
-        <img src="YUSE NUEVA.png" alt="Lottoclick - Agencia La Fortuna" class="main-image">
+        <img id="imgOperadora" alt="Agencia La Fortuna" class="main-image">
         
         <!-- Nota educativa ANTES del botón -->
         <p style="text-align: center; color: #E0E0E0; font-size: 13px; margin-bottom: 12px;">
@@ -248,7 +252,7 @@
         </div>
         
         <div class="operators">
-            <span class="operators-text">👩‍💼 5 operadoras disponibles — elige la que prefieras</span>
+            <span class="operators-text">👩‍💼 6 operadoras disponibles — elige la que prefieras</span>
         </div>
         
         <div class="contact">
@@ -260,8 +264,10 @@
     </div>
     
     <script>
+        // Cargar imagen de la operadora desde la variable de arriba
+        document.getElementById('imgOperadora').src = IMAGEN_OPERADORA;
+
         // Enlace ofuscado para evitar rastreo de bots
-        // Se reconstruye solo al hacer clic (usa GRUPO_WHATSAPP de arriba)
         const _p1 = "https://chat.whats";
         const _p2 = "app.com/";
         
