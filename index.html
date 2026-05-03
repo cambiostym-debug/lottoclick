@@ -4,13 +4,58 @@
 <!-- 🔗 CAMBIAR ENLACE DEL GRUPO AQUÍ ABAJO 🔗     -->
 <!-- ============================================= -->
 <script>
-    // ⬇️⬇️⬇️ PEGA EL CÓDIGO DEL GRUPO AQUÍ (solo la parte final del enlace) ⬇️⬇️⬇️
-    var GRUPO_WHATSAPP = "ELBwABcCJ0yAhPJmeoIH5c";
-    // Ejemplo: si tu enlace es https://chat.whatsapp.com/ABC123 pones: "ABC123"
+    // ═══════════════════════════════════════════════════════════
+    // 🔄 ROTADOR DE GRUPOS - Solo edita esta sección
+    // Para agregar un grupo: copia una línea y cambia los datos
+    // peso = presupuesto ($20, $15, etc) - más peso = más visitas
+    // Si quieres distribución UNIFORME (todos igual), pon peso: 1 en todos
+    // ═══════════════════════════════════════════════════════════
+    var GRUPOS = [
+        { codigo: "ELBwABcCJ0yAhPJmeoIH5c", imagen: "lafortuna3.png", peso: 1 },
+        { codigo: "FDuqff2wwdZ8BAH5U0YsfA", imagen: "lafortuna3.png", peso: 1 },
+        { codigo: "EWA1pemkpmqHBSE9Ia0yB5", imagen: "lafortuna3.png", peso: 1 },
+    ];
+    // ═══════════════════════════════════════════════════════════
+    // ⚠️ NO TOCAR NADA DEBAJO DE ESTA LÍNEA
+    // ═══════════════════════════════════════════════════════════
+    var FIREBASE_URL = "https://winter-alliance-474815-b8-default-rtdb.firebaseio.com";
 
-    // ⬇️⬇️⬇️ CAMBIA EL NOMBRE DE LA IMAGEN DE LA OPERADORA AQUÍ ⬇️⬇️⬇️
-    var IMAGEN_OPERADORA = "YUSE NUEVA.png";
-    // Debe ser el nombre exacto del archivo subido al repo
+    // Construir slots intercalados por peso
+    function _buildSlots(grupos) {
+        function gcd(a, b) { return b === 0 ? a : gcd(b, a % b); }
+        var g = grupos[0].peso;
+        for (var i = 1; i < grupos.length; i++) g = gcd(g, grupos[i].peso);
+        var norm = grupos.map(function(gr) { return { g: gr, s: gr.peso / g, p: 0 }; });
+        var total = norm.reduce(function(sum, n) { return sum + n.s; }, 0);
+        var seq = [];
+        for (var pos = 0; pos < total; pos++) {
+            var best = -1, bestR = Infinity;
+            for (var j = 0; j < norm.length; j++) {
+                if (norm[j].p >= norm[j].s) continue;
+                var r = norm[j].p / norm[j].s;
+                if (r < bestR) { bestR = r; best = j; }
+            }
+            seq.push(norm[best].g);
+            norm[best].p++;
+        }
+        return seq;
+    }
+    var _slots = _buildSlots(GRUPOS);
+
+    // Imagen por defecto (Grupo 1 mientras Firebase carga)
+    var IMAGEN_OPERADORA = GRUPOS[0].imagen;
+
+    // Peek: leer contador SIN incrementar para mostrar imagen correcta
+    fetch(FIREBASE_URL + '/rotador/counter.json')
+    .then(function(r) { return r.json(); })
+    .then(function(counter) {
+        var nextSlot = _slots[(counter || 0) % _slots.length];
+        IMAGEN_OPERADORA = nextSlot.imagen;
+        var img = document.getElementById('imgOperadora');
+        if (img) img.src = IMAGEN_OPERADORA;
+    })
+    .catch(function() {});
+
 </script>
 <!-- ============================================= -->
 <head>
@@ -252,7 +297,7 @@
         </div>
         
         <div class="operators">
-            <span class="operators-text">👩‍💼 6 operadoras disponibles — elige la que prefieras</span>
+            <span class="operators-text">👩‍💼 5 operadoras disponibles — elige la que prefieras</span>
         </div>
         
         <div class="contact">
@@ -272,15 +317,32 @@
         const _p2 = "app.com/";
         
         function joinGroup() {
+            // Tracking Facebook
             if (typeof fbq !== 'undefined') {
                 fbq('track', 'Lead', {
                     content_name: 'WhatsApp Group Join',
                     content_category: 'Community'
                 });
             }
-            setTimeout(function() {
-                window.location.href = _p1 + _p2 + GRUPO_WHATSAPP;
-            }, 300);
+
+            // Firebase: incrementar contador y redirigir al grupo correcto
+            fetch(FIREBASE_URL + '/rotador/counter.json', {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ ".sv": { "increment": 1 } })
+            })
+            .then(function(r) { return r.json(); })
+            .then(function(counter) {
+                var sel = _slots[(counter - 1) % _slots.length];
+                console.log('🎯 Click #' + counter + ' → Grupo ' + (GRUPOS.indexOf(sel) + 1));
+                window.location.href = _p1 + _p2 + sel.codigo;
+            })
+            .catch(function() {
+                // Respaldo: aleatorio si Firebase falla
+                var sel = _slots[Math.floor(Math.random() * _slots.length)];
+                console.log('⚠️ Firebase falló, usando aleatorio');
+                window.location.href = _p1 + _p2 + sel.codigo;
+            });
         }
     </script>
 </body>
