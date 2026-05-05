@@ -1,31 +1,39 @@
 <!DOCTYPE html>
 <html lang="es">
 <!-- ============================================= -->
-<!-- 🔗 CAMBIAR ENLACE DEL GRUPO AQUÍ ABAJO 🔗     -->
+<!-- 🔗 CONFIGURACIÓN DE LA TAQUILLA 🔗           -->
 <!-- ============================================= -->
 <script>
     // ═══════════════════════════════════════════════════════════
-    // 🔄 ROTADOR DE GRUPOS - Solo edita esta sección
-    // Para agregar un grupo: copia una línea y cambia los datos
-    // peso = presupuesto ($20, $15, etc) - más peso = más visitas
-    // Si quieres distribución UNIFORME (todos igual), pon peso: 1 en todos
+    // 🔄 ROTADOR DE TAQUILLAS - Solo edita esta sección
+    // peso = multiplicador (1 = normal, 1.5 = 50% más, 2 = doble, 3 = triple)
     // ═══════════════════════════════════════════════════════════
-    var GRUPOS = [
-        { codigo: "ELBwABcCJ0yAhPJmeoIH5c", imagen: "lafortuna3.png", peso: 1 },
-        { codigo: "FDuqff2wwdZ8BAH5U0YsfA", imagen: "lafortuna3.png", peso: 1 },
-        { codigo: "EWA1pemkpmqHBSE9Ia0yB5", imagen: "lafortuna3.png", peso: 1 },
+
+    // ⬇️ NOMBRE ÚNICO del rotador (cambia esto para cada landing) ⬇️
+    var NOMBRE_ROTADOR = "grupo1";
+    // Ejemplos: "grupo1", "grupo2", "grupo3", "vip", etc.
+
+    var TAQUILLAS = [
+        { numero: "584127442032", imagen: "lafortu.png", peso: 1 },
+        { numero: "584124111586", imagen: "lafortu.png", peso: 1 },
+        { numero: "584144963310", imagen: "lafortu.png", peso: 1 },
+        { numero: "584124123090", imagen: "lafortu.png", peso: 1 },
+        { numero: "584125794130", imagen: "lafortu.png", peso: 1 },
     ];
+    var MENSAJE_INICIAL = "Hola! 🍀 Quiero sellar mis jugadas contigo. ¿Cómo hago?";
     // ═══════════════════════════════════════════════════════════
     // ⚠️ NO TOCAR NADA DEBAJO DE ESTA LÍNEA
     // ═══════════════════════════════════════════════════════════
     var FIREBASE_URL = "https://winter-alliance-474815-b8-default-rtdb.firebaseio.com";
 
-    // Construir slots intercalados por peso
-    function _buildSlots(grupos) {
+    // Construir slots intercalados por peso (soporta decimales: 1, 1.5, 2, 3)
+    function _buildSlots(taquillas) {
+        // Multiplicar por 10 para eliminar decimales
+        var pesos = taquillas.map(function(t) { return Math.round(t.peso * 10); });
         function gcd(a, b) { return b === 0 ? a : gcd(b, a % b); }
-        var g = grupos[0].peso;
-        for (var i = 1; i < grupos.length; i++) g = gcd(g, grupos[i].peso);
-        var norm = grupos.map(function(gr) { return { g: gr, s: gr.peso / g, p: 0 }; });
+        var g = pesos[0];
+        for (var i = 1; i < pesos.length; i++) g = gcd(g, pesos[i]);
+        var norm = taquillas.map(function(t, idx) { return { t: t, s: pesos[idx] / g, p: 0 }; });
         var total = norm.reduce(function(sum, n) { return sum + n.s; }, 0);
         var seq = [];
         for (var pos = 0; pos < total; pos++) {
@@ -35,18 +43,18 @@
                 var r = norm[j].p / norm[j].s;
                 if (r < bestR) { bestR = r; best = j; }
             }
-            seq.push(norm[best].g);
+            seq.push(norm[best].t);
             norm[best].p++;
         }
         return seq;
     }
-    var _slots = _buildSlots(GRUPOS);
+    var _slots = _buildSlots(TAQUILLAS);
 
-    // Imagen por defecto (Grupo 1 mientras Firebase carga)
-    var IMAGEN_OPERADORA = GRUPOS[0].imagen;
+    // Imagen por defecto (Taquilla 1 mientras Firebase carga)
+    var IMAGEN_OPERADORA = TAQUILLAS[0].imagen;
 
     // Peek: leer contador SIN incrementar para mostrar imagen correcta
-    fetch(FIREBASE_URL + '/rotador/counter.json')
+    fetch(FIREBASE_URL + '/rotador_' + NOMBRE_ROTADOR + '/counter.json')
     .then(function(r) { return r.json(); })
     .then(function(counter) {
         var nextSlot = _slots[(counter || 0) % _slots.length];
@@ -55,14 +63,13 @@
         if (img) img.src = IMAGEN_OPERADORA;
     })
     .catch(function() {});
-
 </script>
 <!-- ============================================= -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lottoclicks - Agencia La Fortuna | Resultados y Datos de Lotería</title>
-    <meta name="description" content="Únete a nuestro grupo de WhatsApp. Resultados en tiempo real, datos gratis, sellamos tus jugadas. Atención personalizada de 5 operadoras.">
+    <title>Agencia La Fortuna | Tu Taquilla Online de Confianza</title>
+    <meta name="description" content="Escríbenos directo por WhatsApp. Sellamos tus jugadas de animalitos, triples, tripletas y pollas. Atención personalizada.">
     
     <!-- Facebook Pixel Code -->
     <script>
@@ -78,8 +85,7 @@
         fbq('track', 'PageView');
     </script>
     <noscript><img height="1" width="1" style="display:none"
-        src="https://www.facebook.com/tr?id=1191313203218028&ev=PageView&noscript=1"/>
-    </noscript>
+        src="https://www.facebook.com/tr?id=1191313203218028&ev=PageView&noscript=1"/></noscript>
     <!-- End Facebook Pixel Code -->
     
     <style>
@@ -250,7 +256,7 @@
     <div class="container">
         <div class="header">
             <div class="logo-container">
-                <span class="brand-name" style="font-size: 18px; white-space: nowrap;">🎲 AGENCIA ONLINE LOTTOCLICK</span>
+                <span class="brand-name" style="font-size: 18px; white-space: nowrap;">🎰 AGENCIA ONLINE LA FORTUNA</span>
             </div>
         </div>
         
@@ -259,32 +265,27 @@
         
         <!-- Nota educativa ANTES del botón -->
         <p style="text-align: center; color: #E0E0E0; font-size: 13px; margin-bottom: 12px;">
-            ⚠️ Te aparecerá una ventana de confirmación.<br>
-            <strong style="color: #25D366;">Dale "Continuar" para unirte al grupo.</strong>
+            💬 Escríbenos directo y te atendemos al instante.<br>
+            <strong style="color: #25D366;">¡Tu taquilla online 24/7!</strong>
         </p>
         
-        <!-- Botón justo debajo del mensaje -->
-        <!-- Botón justo debajo del mensaje con enlace camuflado -->
+        <!-- Botón con enlace camuflado -->
         <a href="javascript:void(0)" 
            class="cta-button" 
            id="joinButton"
-           onclick="joinGroup()">
+           onclick="contactarTaquilla()">
             <span class="whatsapp-icon">📱</span>
-            UNIRME AL GRUPO DE WHATSAPP GRATIS
+            ESCRIBIR POR WHATSAPP
         </a>
         
         <div class="benefits">
             <div class="benefit-item">
                 <span class="benefit-icon">✅</span>
-                <span class="benefit-text">Sellamos tus jugadas</span>
-                <!-- ALTERNATIVAS DE RESPALDO (si Facebook rechaza, usar una de estas):
-                <span class="benefit-text">Sellamos tus animalitos</span>
-                <span class="benefit-text">Sellamos tus tickets</span>
-                -->
+                <span class="benefit-text">Sellamos tus jugadas al instante</span>
             </div>
             <div class="benefit-item">
-                <span class="benefit-icon">📈</span>
-                <span class="benefit-text">Datos GRATIS todos los días</span>
+                <span class="benefit-icon">🎰</span>
+                <span class="benefit-text">Animalitos, Triples, Tripletas y Pollas</span>
             </div>
             <div class="benefit-item">
                 <span class="benefit-icon">📊</span>
@@ -292,17 +293,17 @@
             </div>
             <div class="benefit-item">
                 <span class="benefit-icon">💬</span>
-                <span class="benefit-text">Atención personalizada</span>
+                <span class="benefit-text">Atención directa y personalizada</span>
             </div>
         </div>
         
         <div class="operators">
-            <span class="operators-text">👩‍💼 5 operadoras disponibles — elige la que prefieras</span>
+            <span class="operators-text">🏆 Tu agencia de confianza — Pago seguro y rápido</span>
         </div>
         
         <div class="contact">
             <p class="contact-text">
-                📞 0412.4123090 | 
+                📞 Escríbenos directo | 
                 <a href="https://instagram.com/AG.LAFORTUNA" class="contact-link">@AG.LAFORTUNA</a>
             </p>
         </div>
@@ -313,20 +314,20 @@
         document.getElementById('imgOperadora').src = IMAGEN_OPERADORA;
 
         // Enlace ofuscado para evitar rastreo de bots
-        const _p1 = "https://chat.whats";
-        const _p2 = "app.com/";
+        const _w1 = "https://wa.";
+        const _w2 = "me/";
         
-        function joinGroup() {
+        function contactarTaquilla() {
             // Tracking Facebook
             if (typeof fbq !== 'undefined') {
                 fbq('track', 'Lead', {
-                    content_name: 'WhatsApp Group Join',
-                    content_category: 'Community'
+                    content_name: 'WhatsApp Direct Contact',
+                    content_category: 'Taquilla'
                 });
             }
 
-            // Firebase: incrementar contador y redirigir al grupo correcto
-            fetch(FIREBASE_URL + '/rotador/counter.json', {
+            // Firebase: incrementar contador y redirigir a la taquilla correcta
+            fetch(FIREBASE_URL + '/rotador_' + NOMBRE_ROTADOR + '/counter.json', {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ ".sv": { "increment": 1 } })
@@ -334,14 +335,15 @@
             .then(function(r) { return r.json(); })
             .then(function(counter) {
                 var sel = _slots[(counter - 1) % _slots.length];
-                console.log('🎯 Click #' + counter + ' → Grupo ' + (GRUPOS.indexOf(sel) + 1));
-                window.location.href = _p1 + _p2 + sel.codigo;
+                var msg = encodeURIComponent(MENSAJE_INICIAL);
+                console.log('🎯 Click #' + counter + ' → Taquilla ' + (TAQUILLAS.indexOf(sel) + 1) + ' | ' + sel.numero);
+                window.location.href = _w1 + _w2 + sel.numero + "?text=" + msg;
             })
             .catch(function() {
                 // Respaldo: aleatorio si Firebase falla
                 var sel = _slots[Math.floor(Math.random() * _slots.length)];
-                console.log('⚠️ Firebase falló, usando aleatorio');
-                window.location.href = _p1 + _p2 + sel.codigo;
+                var msg = encodeURIComponent(MENSAJE_INICIAL);
+                window.location.href = _w1 + _w2 + sel.numero + "?text=" + msg;
             });
         }
     </script>
