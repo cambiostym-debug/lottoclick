@@ -20,7 +20,7 @@
         { numero: "584124123090", imagen: "lafortu.png", peso: 1 },
         { numero: "584125794130", imagen: "lafortu.png", peso: 1 },
     ];
-    var MENSAJE_INICIAL = "Hola! 🍀 Quiero sellar mis jugadas contigo. ¿Cómo hago?";
+    var MENSAJE_INICIAL = "Hola! Quiero jugar 🎰 ¿Cómo hago?";
     // ═══════════════════════════════════════════════════════════
     // ⚠️ NO TOCAR NADA DEBAJO DE ESTA LÍNEA
     // ═══════════════════════════════════════════════════════════
@@ -264,9 +264,9 @@
         <img id="imgOperadora" alt="Agencia La Fortuna" class="main-image">
         
         <!-- Nota educativa ANTES del botón -->
-        <p style="text-align: center; color: #E0E0E0; font-size: 13px; margin-bottom: 12px;">
-            💬 Escríbenos directo y te atendemos al instante.<br>
-            <strong style="color: #25D366;">¡Tu taquilla online 24/7!</strong>
+        <p style="text-align: center; color: #FFD700; font-size: 15px; margin-bottom: 14px; line-height: 1.5;">
+            ⚠️ Al presionar el botón, te aparecerá un aviso.<br>
+            <strong style="color: #25D366; font-size: 16px;">Dale "Continuar" para ir a WhatsApp.</strong>
         </p>
         
         <!-- Botón con enlace camuflado -->
@@ -287,10 +287,7 @@
                 <span class="benefit-icon">🎰</span>
                 <span class="benefit-text">Animalitos, Triples, Tripletas y Pollas</span>
             </div>
-            <div class="benefit-item">
-                <span class="benefit-icon">📊</span>
-                <span class="benefit-text">Resultados en tiempo real</span>
-            </div>
+
             <div class="benefit-item">
                 <span class="benefit-icon">💬</span>
                 <span class="benefit-text">Atención directa y personalizada</span>
@@ -303,8 +300,7 @@
         
         <div class="contact">
             <p class="contact-text">
-                📞 Escríbenos directo | 
-                <a href="https://instagram.com/AG.LAFORTUNA" class="contact-link">@AG.LAFORTUNA</a>
+                📸 <a href="https://instagram.com/AG.LAFORTUNA" class="contact-link">@AG.LAFORTUNA</a> — <strong style="color: #FFD700;">+2.300 seguidores</strong>
             </p>
         </div>
     </div>
@@ -327,6 +323,16 @@
             }
 
             // Firebase: incrementar contador y redirigir a la taquilla correcta
+            var hoy = new Date().toISOString().slice(0, 10); // "2026-05-06"
+            
+            // Incrementar contador diario (no bloquea)
+            fetch(FIREBASE_URL + '/rotador_' + NOMBRE_ROTADOR + '/daily/' + hoy + '.json', {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ ".sv": { "increment": 1 } })
+            });
+
+            // Incrementar contador total y redirigir
             fetch(FIREBASE_URL + '/rotador_' + NOMBRE_ROTADOR + '/counter.json', {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
