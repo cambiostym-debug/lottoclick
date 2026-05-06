@@ -60,16 +60,16 @@
         var nextSlot = _slots[(counter || 0) % _slots.length];
         IMAGEN_OPERADORA = nextSlot.imagen;
         var img = document.getElementById('imgOperadora');
-        if (img) { img.src = IMAGEN_OPERADORA; img.style.opacity = '1'; }
+        if (img) { img.src = IMAGEN_OPERADORA; img.style.display = 'block'; }
     })
     .catch(function() {
         var img = document.getElementById('imgOperadora');
-        if (img) img.style.opacity = '1';
+        if (img) { img.src = IMAGEN_OPERADORA; img.style.display = 'block'; }
     });
     // Fallback: mostrar imagen si Firebase tarda más de 2s
     setTimeout(function() {
         var img = document.getElementById('imgOperadora');
-        if (img && img.style.opacity === '0') img.style.opacity = '1';
+        if (img && img.style.display === 'none') { img.src = IMAGEN_OPERADORA; img.style.display = 'block'; }
     }, 2000);
 </script>
 <!-- ============================================= -->
@@ -269,7 +269,7 @@
         </div>
         
         <!-- Tu imagen -->
-        <img id="imgOperadora" alt="Agencia La Fortuna" class="main-image" style="opacity: 0; transition: opacity 0.3s;">
+        <img id="imgOperadora" alt="Agencia La Fortuna" class="main-image" style="display: none;">
         
         <!-- Nota educativa ANTES del botón -->
         <p style="text-align: center; color: #FFD700; font-size: 15px; margin-bottom: 14px; line-height: 1.5;">
@@ -314,8 +314,7 @@
     </div>
     
     <script>
-        // Cargar imagen de la operadora desde la variable de arriba
-        document.getElementById('imgOperadora').src = IMAGEN_OPERADORA;
+        // La imagen se carga desde Firebase (peek) arriba
 
         // Enlace ofuscado para evitar rastreo de bots
         const _w1 = "https://wa.";
