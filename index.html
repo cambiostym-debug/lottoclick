@@ -66,11 +66,7 @@
         var img = document.getElementById('imgOperadora');
         if (img) { img.src = IMAGEN_OPERADORA; img.style.display = 'block'; }
     });
-    // Fallback: mostrar imagen si Firebase tarda más de 2s
-    setTimeout(function() {
-        var img = document.getElementById('imgOperadora');
-        if (img && img.style.display === 'none') { img.src = IMAGEN_OPERADORA; img.style.display = 'block'; }
-    }, 2000);
+
 </script>
 <!-- ============================================= -->
 <head>
