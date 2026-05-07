@@ -61,9 +61,12 @@
         _taquillaAsignada = _slots[(counter || 0) % _slots.length];
         IMAGEN_OPERADORA = _taquillaAsignada.imagen;
         var img = document.getElementById('imgOperadora');
-        if (img) img.src = IMAGEN_OPERADORA;
+        if (img) { img.src = IMAGEN_OPERADORA; img.style.display = 'block'; }
     })
-    .catch(function() {});
+    .catch(function() {
+        var img = document.getElementById('imgOperadora');
+        if (img) { img.src = IMAGEN_OPERADORA; img.style.display = 'block'; }
+    });
 
 </script>
 <!-- ============================================= -->
