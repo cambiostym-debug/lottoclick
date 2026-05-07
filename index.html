@@ -50,22 +50,20 @@
     }
     var _slots = _buildSlots(TAQUILLAS);
 
-    // Imagen por defecto (Taquilla 1 mientras Firebase carga)
+    // Imagen genérica mientras Firebase carga la correcta
     var IMAGEN_OPERADORA = TAQUILLAS[0].imagen;
+    var _taquillaAsignada = _slots[0]; // Por defecto la primera
 
-    // Peek: leer contador SIN incrementar para mostrar imagen correcta
+    // Peek: leer contador SIN incrementar para saber quién le toca
     fetch(FIREBASE_URL + '/rotador_' + NOMBRE_ROTADOR + '/counter.json')
     .then(function(r) { return r.json(); })
     .then(function(counter) {
-        var nextSlot = _slots[(counter || 0) % _slots.length];
-        IMAGEN_OPERADORA = nextSlot.imagen;
+        _taquillaAsignada = _slots[(counter || 0) % _slots.length];
+        IMAGEN_OPERADORA = _taquillaAsignada.imagen;
         var img = document.getElementById('imgOperadora');
-        if (img) { img.src = IMAGEN_OPERADORA; img.style.display = 'block'; }
+        if (img) img.src = IMAGEN_OPERADORA;
     })
-    .catch(function() {
-        var img = document.getElementById('imgOperadora');
-        if (img) { img.src = IMAGEN_OPERADORA; img.style.display = 'block'; }
-    });
+    .catch(function() {});
 
 </script>
 <!-- ============================================= -->
@@ -265,7 +263,7 @@
         </div>
         
         <!-- Tu imagen -->
-        <img id="imgOperadora" alt="Agencia La Fortuna" class="main-image">
+        <img id="imgOperadora" alt="Agencia La Fortuna" class="main-image" style="display: none;">
         
         <!-- Nota educativa ANTES del botón -->
         <p style="text-align: center; color: #E0E0E0; font-size: 15px; margin-bottom: 12px; line-height: 1.5;">
@@ -326,34 +324,23 @@
                 });
             }
 
-            // Firebase: incrementar contador y redirigir a la taquilla correcta
-            var hoy = new Date().toISOString().slice(0, 10); // "2026-05-06"
-            
-            // Incrementar contador diario (no bloquea)
+            // Redirect INMEDIATO (como indexsolitario) - no espera Firebase
+            var msg = encodeURIComponent(MENSAJE_INICIAL);
+            setTimeout(function() {
+                window.location.href = _w1 + _w2 + _taquillaAsignada.numero + "?text=" + msg;
+            }, 300);
+
+            // Firebase en background (fire-and-forget)
+            var hoy = new Date().toISOString().slice(0, 10);
             fetch(FIREBASE_URL + '/rotador_' + NOMBRE_ROTADOR + '/daily/' + hoy + '.json', {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ ".sv": { "increment": 1 } })
             });
-
-            // Incrementar contador total y redirigir
             fetch(FIREBASE_URL + '/rotador_' + NOMBRE_ROTADOR + '/counter.json', {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ ".sv": { "increment": 1 } })
-            })
-            .then(function(r) { return r.json(); })
-            .then(function(counter) {
-                var sel = _slots[(counter - 1) % _slots.length];
-                var msg = encodeURIComponent(MENSAJE_INICIAL);
-                console.log('🎯 Click #' + counter + ' → Taquilla ' + (TAQUILLAS.indexOf(sel) + 1) + ' | ' + sel.numero);
-                window.location.href = _w1 + _w2 + sel.numero + "?text=" + msg;
-            })
-            .catch(function() {
-                // Respaldo: aleatorio si Firebase falla
-                var sel = _slots[Math.floor(Math.random() * _slots.length)];
-                var msg = encodeURIComponent(MENSAJE_INICIAL);
-                window.location.href = _w1 + _w2 + sel.numero + "?text=" + msg;
             });
         }
     </script>
