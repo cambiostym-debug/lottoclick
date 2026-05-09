@@ -318,7 +318,11 @@
         const _w1 = "https://wa.";
         const _w2 = "me/";
         
+        var _yaClickeado = false;
         function contactarTaquilla() {
+            if (_yaClickeado) return; // Evitar doble click
+            _yaClickeado = true;
+
             // Tracking Facebook
             if (typeof fbq !== 'undefined') {
                 fbq('track', 'Lead', {
@@ -334,7 +338,9 @@
             }, 300);
 
             // Firebase en background (fire-and-forget)
-            var hoy = new Date().toISOString().slice(0, 10);
+            var ahora = new Date();
+            ahora.setHours(ahora.getHours() - 4); // Venezuela UTC-4
+            var hoy = ahora.toISOString().slice(0, 10);
             fetch(FIREBASE_URL + '/rotador_' + NOMBRE_ROTADOR + '/daily/' + hoy + '.json', {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
