@@ -1,39 +1,36 @@
 <!DOCTYPE html>
 <html lang="es">
 <!-- ============================================= -->
-<!-- 🔗 CONFIGURACIÓN DE LA TAQUILLA 🔗           -->
+<!-- 🔗 CAMBIAR ENLACE DEL GRUPO AQUÍ ABAJO 🔗     -->
 <!-- ============================================= -->
 <script>
     // ═══════════════════════════════════════════════════════════
-    // 🔄 ROTADOR DE TAQUILLAS - Solo edita esta sección
+    // 🔄 ROTADOR DE GRUPOS - Solo edita esta sección
     // peso = multiplicador (1 = normal, 1.5 = 50% más, 2 = doble, 3 = triple)
+    // Si quieres distribución UNIFORME (todos igual), pon peso: 1 en todos
     // ═══════════════════════════════════════════════════════════
 
     // ⬇️ NOMBRE ÚNICO del rotador (cambia esto para cada landing) ⬇️
-    var NOMBRE_ROTADOR = "grupo1";
-    // Ejemplos: "grupo1", "grupo2", "grupo3", "vip", etc.
+    var NOMBRE_ROTADOR = "grupos_main";
+    // Ejemplos: "grupos_main", "grupos_vip", "grupos_premium", etc.
 
-    var TAQUILLAS = [
-        { numero: "584127442032", imagen: "andre.jpg", peso: 1 },
-        { numero: "584124111586", imagen: "gerlyn.jpg", peso: 1 },
-        { numero: "584144963310", imagen: "merli.jpg", peso: 1 },
-        { numero: "584124123090", imagen: "yuse.jpg", peso: 1 },
-        { numero: "584125794130", imagen: "zuge.jpg", peso: 1 },
+    var GRUPOS = [
+        { codigo: "ELBwABcCJ0yAhPJmeoIH5c", imagen: "lafortuna3.png", peso: 1 },
+        { codigo: "FDuqff2wwdZ8BAH5U0YsfA", imagen: "lafortuna3.png", peso: 1 },
+        { codigo: "EWA1pemkpmqHBSE9Ia0yB5", imagen: "lafortuna3.png", peso: 1 },
     ];
-    var MENSAJE_INICIAL = "Hola! Quiero jugar 🎰 ¿Cómo hago?";
     // ═══════════════════════════════════════════════════════════
     // ⚠️ NO TOCAR NADA DEBAJO DE ESTA LÍNEA
     // ═══════════════════════════════════════════════════════════
     var FIREBASE_URL = "https://winter-alliance-474815-b8-default-rtdb.firebaseio.com";
 
     // Construir slots intercalados por peso (soporta decimales: 1, 1.5, 2, 3)
-    function _buildSlots(taquillas) {
-        // Multiplicar por 10 para eliminar decimales
-        var pesos = taquillas.map(function(t) { return Math.round(t.peso * 10); });
+    function _buildSlots(grupos) {
+        var pesos = grupos.map(function(gr) { return Math.round(gr.peso * 10); });
         function gcd(a, b) { return b === 0 ? a : gcd(b, a % b); }
         var g = pesos[0];
-        for (var i = 1; i < pesos.length; i++) g = gcd(g, pesos[i]);
-        var norm = taquillas.map(function(t, idx) { return { t: t, s: pesos[idx] / g, p: 0 }; });
+        for (var i = 1; i < grupos.length; i++) g = gcd(g, pesos[i]);
+        var norm = grupos.map(function(gr, idx) { return { g: gr, s: pesos[idx] / g, p: 0 }; });
         var total = norm.reduce(function(sum, n) { return sum + n.s; }, 0);
         var seq = [];
         for (var pos = 0; pos < total; pos++) {
@@ -43,38 +40,34 @@
                 var r = norm[j].p / norm[j].s;
                 if (r < bestR) { bestR = r; best = j; }
             }
-            seq.push(norm[best].t);
+            seq.push(norm[best].g);
             norm[best].p++;
         }
         return seq;
     }
-    var _slots = _buildSlots(TAQUILLAS);
+    var _slots = _buildSlots(GRUPOS);
 
-    // Imagen genérica mientras Firebase carga la correcta
-    var IMAGEN_OPERADORA = TAQUILLAS[0].imagen;
-    var _taquillaAsignada = _slots[0]; // Por defecto la primera
+    // Imagen por defecto (Grupo 1 mientras Firebase carga)
+    var IMAGEN_OPERADORA = GRUPOS[0].imagen;
 
-    // Peek: leer contador SIN incrementar para saber quién le toca
+    // Peek: leer contador SIN incrementar para mostrar imagen correcta
     fetch(FIREBASE_URL + '/rotador_' + NOMBRE_ROTADOR + '/counter.json')
     .then(function(r) { return r.json(); })
     .then(function(counter) {
-        _taquillaAsignada = _slots[(counter || 0) % _slots.length];
-        IMAGEN_OPERADORA = _taquillaAsignada.imagen;
+        var nextSlot = _slots[(counter || 0) % _slots.length];
+        IMAGEN_OPERADORA = nextSlot.imagen;
         var img = document.getElementById('imgOperadora');
-        if (img) { img.src = IMAGEN_OPERADORA; img.style.display = 'block'; }
+        if (img) img.src = IMAGEN_OPERADORA;
     })
-    .catch(function() {
-        var img = document.getElementById('imgOperadora');
-        if (img) { img.src = IMAGEN_OPERADORA; img.style.display = 'block'; }
-    });
+    .catch(function() {});
 
 </script>
 <!-- ============================================= -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agencia La Fortuna | Tu Taquilla Online de Confianza</title>
-    <meta name="description" content="Escríbenos directo por WhatsApp. Sellamos tus jugadas de animalitos, triples, tripletas y pollas. Atención personalizada.">
+    <title>Lottoclicks - Agencia La Fortuna | Resultados y Datos de Lotería</title>
+    <meta name="description" content="Únete a nuestro grupo de WhatsApp. Resultados en tiempo real, datos gratis, sellamos tus jugadas. Atención personalizada de 5 operadoras.">
     
     <!-- Facebook Pixel Code -->
     <script>
@@ -90,7 +83,8 @@
         fbq('track', 'PageView');
     </script>
     <noscript><img height="1" width="1" style="display:none"
-        src="https://www.facebook.com/tr?id=1191313203218028&ev=PageView&noscript=1"/></noscript>
+        src="https://www.facebook.com/tr?id=1191313203218028&ev=PageView&noscript=1"/>
+    </noscript>
     <!-- End Facebook Pixel Code -->
     
     <style>
@@ -261,95 +255,98 @@
     <div class="container">
         <div class="header">
             <div class="logo-container">
-                <span class="brand-name" style="font-size: 18px; white-space: nowrap;">🎰 AGENCIA ONLINE LA FORTUNA</span>
+                <span class="brand-name" style="font-size: 18px; white-space: nowrap;">🎲 AGENCIA ONLINE LOTTOCLICK</span>
             </div>
         </div>
         
         <!-- Tu imagen -->
-        <img id="imgOperadora" alt="Agencia La Fortuna" class="main-image" style="display: none;">
+        <img id="imgOperadora" alt="Agencia La Fortuna" class="main-image">
         
         <!-- Nota educativa ANTES del botón -->
-        <p style="text-align: center; color: #E0E0E0; font-size: 15px; margin-bottom: 12px; line-height: 1.5;">
-            💬 Escríbenos directo y te atendemos al instante.<br>
-            <strong style="color: #25D366; font-size: 16px;">¡Tu taquilla online!</strong><br>
-            <span style="font-size: 15px; color: #FFD700;">💚 Solo dale "Continuar" y listo</span>
+        <p style="text-align: center; color: #E0E0E0; font-size: 13px; margin-bottom: 12px;">
+            ⚠️ Te aparecerá una ventana de confirmación.<br>
+            <strong style="color: #25D366;">Dale "Continuar" para unirte al grupo.</strong>
         </p>
         
-        <!-- Botón con enlace camuflado -->
+        <!-- Botón justo debajo del mensaje -->
+        <!-- Botón justo debajo del mensaje con enlace camuflado -->
         <a href="javascript:void(0)" 
            class="cta-button" 
            id="joinButton"
-           onclick="contactarTaquilla()">
+           onclick="joinGroup()">
             <span class="whatsapp-icon">📱</span>
-            ESCRIBIR POR WHATSAPP
+            UNIRME AL GRUPO DE WHATSAPP GRATIS
         </a>
         
         <div class="benefits">
             <div class="benefit-item">
                 <span class="benefit-icon">✅</span>
-                <span class="benefit-text">Sellamos tus jugadas al instante</span>
+                <span class="benefit-text">Sellamos tus jugadas</span>
+                <!-- ALTERNATIVAS DE RESPALDO (si Facebook rechaza, usar una de estas):
+                <span class="benefit-text">Sellamos tus animalitos</span>
+                <span class="benefit-text">Sellamos tus tickets</span>
+                -->
             </div>
             <div class="benefit-item">
-                <span class="benefit-icon">🎰</span>
-                <span class="benefit-text">Animalitos, Triples, Tripletas y Pollas</span>
+                <span class="benefit-icon">📈</span>
+                <span class="benefit-text">Datos GRATIS todos los días</span>
             </div>
-
+            <div class="benefit-item">
+                <span class="benefit-icon">📊</span>
+                <span class="benefit-text">Resultados en tiempo real</span>
+            </div>
             <div class="benefit-item">
                 <span class="benefit-icon">💬</span>
-                <span class="benefit-text">Atención directa y personalizada</span>
+                <span class="benefit-text">Atención personalizada</span>
             </div>
         </div>
         
         <div class="operators">
-            <span class="operators-text">🏆 Tu agencia de confianza — Pago seguro y rápido</span>
+            <span class="operators-text">👩‍💼 5 operadoras disponibles — elige la que prefieras</span>
         </div>
         
         <div class="contact">
             <p class="contact-text">
-                📸 <a href="https://instagram.com/AG.LAFORTUNA" class="contact-link">@AG.LAFORTUNA</a> — <strong style="color: #FFD700;">+2.300 seguidores</strong>
+                📞 0412.4123090 | 
+                <a href="https://instagram.com/AG.LAFORTUNA" class="contact-link">@AG.LAFORTUNA</a>
             </p>
         </div>
     </div>
     
     <script>
-        // La imagen se carga desde Firebase (peek) arriba
+        // Cargar imagen de la operadora desde la variable de arriba
+        document.getElementById('imgOperadora').src = IMAGEN_OPERADORA;
 
         // Enlace ofuscado para evitar rastreo de bots
-        const _w1 = "https://wa.";
-        const _w2 = "me/";
+        const _p1 = "https://chat.whats";
+        const _p2 = "app.com/";
         
-        var _yaClickeado = false;
-        function contactarTaquilla() {
-            if (_yaClickeado) return; // Evitar doble click
-            _yaClickeado = true;
-
+        function joinGroup() {
             // Tracking Facebook
             if (typeof fbq !== 'undefined') {
                 fbq('track', 'Lead', {
-                    content_name: 'WhatsApp Direct Contact',
-                    content_category: 'Taquilla'
+                    content_name: 'WhatsApp Group Join',
+                    content_category: 'Community'
                 });
             }
 
-            // Redirect INMEDIATO (como indexsolitario) - no espera Firebase
-            var msg = encodeURIComponent(MENSAJE_INICIAL);
-            setTimeout(function() {
-                window.location.href = _w1 + _w2 + _taquillaAsignada.numero + "?text=" + msg;
-            }, 300);
-
-            // Firebase en background (fire-and-forget)
-            var ahora = new Date();
-            ahora.setHours(ahora.getHours() - 4); // Venezuela UTC-4
-            var hoy = ahora.toISOString().slice(0, 10);
-            fetch(FIREBASE_URL + '/rotador_' + NOMBRE_ROTADOR + '/daily/' + hoy + '.json', {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ ".sv": { "increment": 1 } })
-            });
+            // Firebase: incrementar contador y redirigir al grupo correcto
             fetch(FIREBASE_URL + '/rotador_' + NOMBRE_ROTADOR + '/counter.json', {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ ".sv": { "increment": 1 } })
+            })
+            .then(function(r) { return r.json(); })
+            .then(function(counter) {
+                var sel = _slots[(counter - 1) % _slots.length];
+                console.log('🎯 Click #' + counter + ' → Grupo ' + (GRUPOS.indexOf(sel) + 1));
+                window.location.href = _p1 + _p2 + sel.codigo;
+            })
+            .catch(function() {
+                // Respaldo: aleatorio si Firebase falla
+                var sel = _slots[Math.floor(Math.random() * _slots.length)];
+                console.log('⚠️ Firebase falló, usando aleatorio');
+                window.location.href = _p1 + _p2 + sel.codigo;
             });
         }
     </script>
